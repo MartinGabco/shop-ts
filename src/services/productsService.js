@@ -1,6 +1,11 @@
-import http from './httpService';
-import { apiUrl } from './config.json';
+import type { Product } from './api';
 
-export function getProducts() {
-    return http.get(apiUrl);
+export interface ProductsState {
+    products: { [name: string]: Product}
 }
+
+const initialState: ProductsState = {
+    products: {}
+}
+
+console.log(products);
