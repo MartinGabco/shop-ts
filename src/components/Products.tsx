@@ -1,31 +1,31 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { receivedProducts } from '../store/slices/productsSlice';
 import '../styles/Products.css';
 import { getProducts } from '../services/api';
 
-const things = {
-    products: getProducts()
-}
-
-const Products = (props: Props) => {
-    const initialState = {
-        items: things
-    };
-    const state = initialState.items.products;
-
-    const [mine, setMine] = useState([]);
-
+export function Products() {
+    const dispatch = useAppDispatch();
+    const products = useAppSelector((state) => state.products.products);
     useEffect(() => {
-        setMine(state)
+        getProducts().then((products) => {
+            dispatch(receivedProducts(products));
+        });
     }, [])
-
-    console.log(mine);
     return (
         <div className="products">
             <h2>Products</h2>
-        </div> 
+            <ul className={products}>
+                {Object.values(products).map((product) => (
+                    <li key={product.id}>
+                        <p>{product.name}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
-}
+};
 
 export default Products
 
