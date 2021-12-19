@@ -1,7 +1,11 @@
 export interface Product {
-    id: number,
-    name: string,
-    image_link: string,
+    id: number;
+    brand: string;
+    name: string;
+    price: number;
+    price_sign: string;
+    image_link: string;
+    website_link: string;
 }
 
 export async function getProducts(): Promise<Product[]> {

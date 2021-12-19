@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type Product from '../services/api';
+import type { Product } from '../../services/api';
 
 export interface ProductsState {
-    products: { [id: number]: Product};
+    products: { [id: number]: Product }
 }
 
 const initialState: ProductsState = {
@@ -10,16 +10,16 @@ const initialState: ProductsState = {
 }
 
 const productsSlice = createSlice({
-   initialState,
-   name: 'products',
-   reducers: {
+    name:'products',
+    initialState,
+    reducers: {
         receivedProducts(state, action: PayloadAction<Product[]>) {
            const products = action.payload;
            products.forEach((product) => {
-               state.products[product.id] = product;
+                state.products[product.id] = product;
            });
         },
-   },
+    },
 });
 
 export const { receivedProducts } = productsSlice.actions;
