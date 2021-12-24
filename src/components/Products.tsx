@@ -1,21 +1,43 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { receivedProducts } from '../store/slices/productsSlice';
+import { receivedBrands } from '../store/slices/productsSlice';
 import { getProducts } from '../services/api';
+import { getBrands } from '../services/api';
 import '../styles/Products.css';
 
 export function Products() {
     const dispatch = useAppDispatch();
     const products = useAppSelector(state => state.products.products);
+    const brands = useAppSelector(state => state.brands.brands);
+
     useEffect(() => {
         getProducts().then((products) => {
             dispatch(receivedProducts(products));
-        });
+        });       
     }, []);
+
+    useEffect(() => {
+       getBrands().then((brands) => {
+           dispatch(receivedBrands(brands));
+       })
+    }, []);
+
+    const state = {
+        brands: getBrands()
+    }
+    console.log(state);
 
     return (
         <div className="products">
             <h1>PRODUCTS</h1>
+                <ul>
+                    {Object.values(brands).map(brand => (
+                        <li>
+                            <p>{brand.name}</p>
+                        </li>
+                    ))}
+                </ul>
                 <ul className="productsWrapper">
                     {Object.values(products).map(product => 
                         (<li key={product.id}>
